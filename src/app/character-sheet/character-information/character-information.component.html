@@ -1,0 +1,62 @@
+<div class="accordion" id="accordionCharacterSheet">
+  <div class="card">
+    <div class="card-header" id="basicInformationHeader">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#basicInformationBody"
+                aria-expanded="true" aria-controls="basicInformationBody">
+          General
+        </button>
+      </h2>
+    </div>
+    <div id="basicInformationBody" class="collapse" aria-labelledby="basicInformationHeader"
+         data-parent="#accordionCharacterSheet">
+      <div class="card-body">
+        <app-basic-information [characterSheet]="characterSheet"></app-basic-information>
+        <button type="button" class="btn btn-primary"
+                data-toggle="collapse"
+                data-target="#raceInformationBody"
+                aria-expanded="false"
+                aria-controls="raceInformationBody">Next
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="raceInformationHeader">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#raceInformationBody"
+                aria-expanded="false" aria-controls="raceInformationBody">
+          Race
+        </button>
+      </h2>
+    </div>
+    <div id="raceInformationBody" class="collapse" aria-labelledby="raceInformationHeader"
+         data-parent="#accordionCharacterSheet">
+      <div class="card-body">
+        <app-race-information [characterSheet]="characterSheet"></app-race-information>
+        <button type="button" class="btn btn-primary"
+                data-toggle="collapse"
+                data-target="#classInformationBody"
+                aria-expanded="false"
+                aria-controls="classInformationBody">Next
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="classInformationHeader">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#classInformationBody"
+                aria-expanded="false" aria-controls="classInformationBody">
+          Class
+        </button>
+      </h2>
+    </div>
+    <div id="classInformationBody" class="collapse show" aria-labelledby="classInformationHeader"
+         data-parent="#accordionCharacterSheet">
+      <div class="card-body">
+        <app-class-information></app-class-information>
+      </div>
+    </div>
+  </div>
+</div>

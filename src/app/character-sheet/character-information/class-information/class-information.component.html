@@ -1,0 +1,16 @@
+<form>
+  <div class="alert alert-danger" *ngIf="error">
+    {{error}}
+  </div>
+  <div class="form-group">
+    <label for="selectClass">
+      Class
+    </label>
+    <select *ngIf="!classes" id="selectClass" class="form-control">
+      <option>Loading ...</option>
+    </select>
+    <select *ngIf="classes" id="selectClass" class="form-control">
+      <option *ngFor="let classOption of classes">{{classOption.name}}</option>
+    </select>
+  </div>
+</form>

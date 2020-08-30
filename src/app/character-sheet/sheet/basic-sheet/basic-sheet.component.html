@@ -1,0 +1,68 @@
+<div class="row">
+<div class="col-6">
+  <div class="form-group">
+    <label for="name">
+      Character name
+    </label>
+    <input type="text" [(ngModel)]="characterSheet.name" name="name" id="name" class="form-control">
+  </div>
+</div>
+<div class="col-6">
+  <div class="row">
+    <div class="col-4">
+      <div class="form-group">
+        <label for="class">
+          Class & level
+        </label>
+        <input id="class" name="class" type="text" class="form-control" placeholder="Fighter" disabled>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label for="background">
+          Background
+        </label>
+        <input id="background" name="background" type="text" class="form-control" placeholder="Noble" disabled>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label for="player-name">
+          Player name
+        </label>
+        <input id="player-name" name="player-name" type="text" class="form-control" placeholder="Max Mustermann"
+               disabled>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      <div class="form-group">
+        <label for="race">
+          Race
+        </label>
+        <input type="text" id="race" name="race" class="form-control" [ngModel]="characterSheet.race" disabled>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label for="alignment">
+          Alignment
+        </label>
+        <input type="text" id="alignment" name="alignment" class="form-control" [ngModel]="characterSheet.alignment"
+               disabled>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label for="experience">
+          Experience points
+        </label>
+        <input type="text" id="experience" name="experience" class="form-control" placeholder="0" disabled>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>

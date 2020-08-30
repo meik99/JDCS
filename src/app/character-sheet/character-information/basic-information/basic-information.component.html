@@ -1,0 +1,34 @@
+<div class="alert alert-danger" role="alert"
+     *ngIf="error">
+  {{error}}
+</div>
+<form>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input class="form-control" type="text" id="name" name="name" [(ngModel)]="characterSheet.name">
+  </div>
+  <div class="form-group">
+    <label for="personalityTraits">
+      Personality Traits
+    </label>
+    <textarea class="form-control" id="personalityTraits" name="personalityTraits" [(ngModel)]="characterSheet.personalityTraits"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="ideals">
+      Ideals
+    </label>
+    <textarea class="form-control" id="ideals" name="ideals" [(ngModel)]="characterSheet.ideals"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="bonds">
+      Bonds
+    </label>
+    <textarea class="form-control" id="bonds" name="bonds" [(ngModel)]="characterSheet.bonds"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="flaws">
+      Flaws
+    </label>
+    <textarea class="form-control" id="flaws" name="flaws" [(ngModel)]="characterSheet.flaws"></textarea>
+  </div>
+</form>

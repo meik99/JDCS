@@ -1,0 +1,197 @@
+<div class="alert alert-danger" role="alert"
+     *ngIf="error">
+  {{error}}
+</div>
+<form>
+  <div class="form-group">
+    <label for="selectRace">Race</label>
+    <select class="form-control" id="selectRace"
+            *ngIf="!races">
+      <option>Loading ...</option>
+      <option [value]="'custom'">
+        Custom
+      </option>
+    </select>
+    <select class="form-control" id="selectRace"
+            *ngIf="races" [(ngModel)]="raceIndex" [ngModelOptions]="{standalone: true}">
+      <option *ngFor="let raceOption of races" [value]="raceOption.index">
+        {{raceOption.name}}
+      </option>
+      <option [value]="'custom'">
+        Custom
+      </option>
+    </select>
+  </div>
+  <div class="form-group" *ngIf="raceIndex && raceIndex === 'custom'">
+    <label for="raceName">
+      Name of race
+    </label>
+    <input type="text" class="form-control" id="raceName" [value]="race.name">
+  </div>
+  <div class="form-group">
+    <label for="raceAbilityModifier">
+      Ability bonuses
+    </label>
+    <div id="raceAbilityModifier" *ngIf="race">
+      <div class="row">
+        <div class="form-group col-12 col-lg-2 col-md-4 col-sm-6" *ngFor="let abilityModifier of race.abilityBonuses | keyvalue">
+          <label [htmlFor]="abilityModifier.key">
+            {{abilityModifier.value.longName}}
+          </label>
+          <input [id]="abilityModifier.key" [name]="abilityModifier.key" type="number" min="0" max="10" class="form-control" [(ngModel)]="race.abilityBonuses[abilityModifier.key].bonus">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group" *ngIf="race">
+    <label for="speed">Speed</label>
+    <div class="input-group mb-2">
+      <input type="text" class="form-control" id="speed" name="speed" [(ngModel)]="race.speed">
+      <div class="input-group-append">
+        <div class="input-group-text">ft</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="size">
+      Size <span *ngIf="race && race.sizeClass"> - {{race.sizeClass}} </span>
+    </label>
+    <div class="alert alert-info" *ngIf="race && race.sizeDescription">
+      {{race.sizeDescription}}
+    </div>
+    <input type="text" class="form-control" id="size" name="size" [(ngModel)]="characterSheet.size">
+  </div>
+  <div class="form-group">
+    <label for="weight">
+      Weight
+    </label>
+    <input type="text" class="form-control" id="weight" name="weight" [(ngModel)]="characterSheet.weight">
+  </div>
+  <div class="form-group">
+    <label for="age">
+      Age
+    </label>
+    <div class="alert alert-info" *ngIf="race && race.age">
+      {{race.age}}
+    </div>
+    <input type="text" class="form-control" id="age" name="age" [(ngModel)]="characterSheet.age">
+  </div>
+  <div class="form-group">
+    <label for="languages">
+      Languages
+    </label>
+    <div class="alert alert-info" *ngIf="race && race.languageDescription">
+      {{race.languageDescription}}
+    </div>
+    <div id="languages" *ngIf="race && race.languages">
+      <span
+        *ngFor="let language of race.languages" >
+        <div class="row">
+          <div class="col-10">
+            <input type="text" class="form-control"[(ngModel)]="language.name" [id]="language.name" [name]="language.name">
+          </div>
+          <div class="col-2">
+            <button type="button" class="btn btn-outline-danger" (click)="removeLanguage(language.name)">Remove</button>
+          </div>
+        </div>
+        <br>
+      </span>
+    </div>
+    <div id="languages" *ngIf="!race || !race.languages || race.languages.length <= 0">
+      <span class="text-info">None</span>
+    </div>
+    <button type="button" class="btn btn-outline-primary"
+            [class.mt-4]="!race || !race.languages || race.languages.length <= 0"
+            (click)="addLanguage()">
+      Add
+    </button>
+  </div>
+  <div class="form-group">
+    <label for="startingProficiencies">
+      Starting proficiencies
+    </label>
+    <div id="startingProficiencies" *ngIf="race && race.startingProficiencies">
+      <span
+        *ngFor="let proficiency of race.startingProficiencies" >
+        <div class="row">
+          <div class="col-10">
+            <input type="text" class="form-control"[(ngModel)]="proficiency.name" [id]="proficiency.name" [name]="proficiency.name">
+          </div>
+          <div class="col-2">
+            <button type="button" class="btn btn-outline-danger" (click)="removeStartingProficiencies(proficiency.name)">Remove</button>
+          </div>
+        </div>
+        <br>
+      </span>
+    </div>
+    <div id="startingProficiencies" *ngIf="!race || !race.startingProficiencies || race.startingProficiencies.length <= 0">
+        <span class="text-info">None</span>
+    </div>
+    <button type="button" class="btn btn-outline-primary"
+            [class.mt-4]="!race || !race.startingProficiencies || race.startingProficiencies.length <= 0"
+            (click)="addStartingProficiencies()">
+      Add
+    </button>
+  </div>
+  <div class="form-group" *ngIf="race && race.startingProficienciesOptions">
+    <label for="startingProficienciesChooser">
+      Starting proficiencies - choose {{race.startingProficienciesOptions.choose}}
+    </label>
+    <div id="startingProficienciesChooser">
+      <div class="form-group form-check" *ngFor="let proficiency of race.startingProficienciesOptions.proficiencies">
+        <input type="checkbox" class="form-check-input"
+               id="check{{proficiency.name}}"
+               name="check{{proficiency.name}}"
+               (click)="checkStartingProficiency($event, proficiency.name)"
+              [ngModel]="startingProficiencyOptions[proficiency.name].checked">
+        <label class="form-check-label" for="check{{proficiency.name}}">{{proficiency.name}}</label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="startingProficiencies">
+      Traits
+    </label>
+    <div id="traits" *ngIf="race && race.traits">
+      <span
+        *ngFor="let trait of race.traits" >
+        <div class="row">
+          <div class="col-10">
+            <input type="text" class="form-control"[(ngModel)]="trait.name" [id]="trait.name" [name]="trait.name">
+          </div>
+          <div class="col-2">
+            <button type="button" class="btn btn-outline-danger" (click)="removeTrait(trait.name)">Remove</button>
+          </div>
+        </div>
+        <br>
+      </span>
+    </div>
+    <div id="traits" *ngIf="!race || !race.traits || race.traits.length <= 0">
+      <span class="text-info">None</span>
+    </div>
+    <button type="button" class="btn btn-outline-primary"
+            [class.mt-4]="!race || !race.traits || race.traits.length <= 0"
+            (click)="addTrait()">
+      Add
+    </button>
+  </div>
+  <div class="form-group">
+    <label for="alignment">
+      Alignment
+    </label>
+    <div class="alert alert-info" *ngIf="race && race.alignment">
+      {{race.alignment}}
+    </div>
+    <select class="form-control" id="alignment" name="alignment" [(ngModel)]="characterSheet.alignment">
+      <option>Lawful Good</option>
+      <option>Neutral Good</option>
+      <option>Chaotic Good</option>
+      <option>Lawful Neutral</option>
+      <option>Neutral</option>
+      <option>Chaotic Neutral</option>
+      <option>Lawful Evil</option>
+      <option>Neutral Evil</option>
+      <option>Chaotic Evil</option>
+    </select>
+  </div>
+</form>
